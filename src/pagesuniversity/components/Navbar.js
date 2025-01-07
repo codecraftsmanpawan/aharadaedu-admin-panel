@@ -5,13 +5,16 @@ const Navbar = ({ universityName }) => {
 
   const handleLogout = () => {
     localStorage.removeItem("universityloginaradradha");
-    navigate("/login");
+    navigate("/university/login/admin");
   };
 
   const username = "Admin";
 
   return (
-    <nav className="bg-blue-600 p-4 flex justify-between items-center">
+    <nav
+      className=" p-4 flex justify-between items-center"
+      style={{ backgroundColor: "#072e46" }}
+    >
       {/* Logo */}
       <div className="flex items-center">
         <img

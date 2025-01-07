@@ -29,8 +29,15 @@ const Navbar = () => {
   return (
     <nav className="bg-gray-800 text-white p-4 flex items-center justify-between">
       {/* Left side: Admin Panel title */}
-      <h1 className="text-xl">Admin Panel</h1>
-
+      <div className="flex items-center">
+        <img
+          src="https://www.aharadaedu.in/whf.png"
+          width={30}
+          alt="Logo"
+          className="mr-3"
+        />
+        <h1 className="text-white text-xl font-semibold">Admin Panel</h1>
+      </div>
       {/* Right side: Profile and Notifications */}
       <div className="flex items-center space-x-4">
         {/* Welcome Message */}

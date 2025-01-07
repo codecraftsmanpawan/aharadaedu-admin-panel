@@ -78,7 +78,7 @@ const AdmissionLeadsTable = () => {
   return (
     <>
       <Navbar />{" "}
-      <div className="p-6">
+      <div className="p-6" style={{ backgroundColor: "#f1f2e4" }}>
         {/* Table Section */}
         <div className="mb-4 flex justify-between items-center">
           <h2 className="text-xl font-semibold">Admission Leads</h2>

@@ -105,7 +105,7 @@ const Dashboard = () => {
     <>
       <Navbar universityName={data.universityName} />{" "}
       {/* Pass universityName as a prop */}
-      <div className="p-6">
+      <div className="p-6" style={{ backgroundColor: "#f1f2e4" }}>
         {/* Cards Section */}
         <div className="grid grid-cols-1 md:grid-cols-3 gap-4 mb-6">
           <div className="bg-white p-6 rounded-lg shadow-lg flex items-center justify-between">

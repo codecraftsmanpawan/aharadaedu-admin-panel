@@ -86,7 +86,7 @@ const LoginPage = () => {
     <div
       className="flex items-center justify-center min-h-screen"
       style={{
-        background: "linear-gradient(rgb(253, 251, 249), rgb(244, 235, 221))",
+        background: "linear-gradient(rgb(20,18,88,255), rgb(83, 121, 181))",
       }}
     >
       <motion.div
@@ -98,17 +98,25 @@ const LoginPage = () => {
           boxShadow:
             "0 8px 15px rgba(0, 0, 0, 0.1), 0 4px 6px rgba(0, 0, 0, 0.2)",
           transform: "translateZ(0)",
-          background: "linear-gradient(rgb(253, 251, 249), rgb(229, 226, 222))",
+          backgroundColor: "#142658",
         }}
       >
-        <h2 className="text-3xl font-bold text-center text-gray-700">
-          Admin Panel Login
-        </h2>
+        <div className="text-center">
+          <img
+            src="https://www.aharadaedu.in/whf.png"
+            alt="Admin Panel Logo"
+            className="mx-auto mb-4 w-24 h-24"
+          />
+          <h2 className="text-3xl font-bold text-gray-100">
+            Admin Panel Login
+          </h2>
+        </div>
+
         <form onSubmit={handleLogin} className="space-y-4">
           <div>
             <label
               htmlFor="username"
-              className="block text-sm font-medium text-gray-700"
+              className="block text-sm font-medium text-gray-100"
             >
               Username
             </label>
@@ -130,7 +138,7 @@ const LoginPage = () => {
           <div>
             <label
               htmlFor="password"
-              className="block text-sm font-medium text-gray-700"
+              className="block text-sm font-medium text-gray-100"
             >
               Password
             </label>
@@ -151,7 +159,7 @@ const LoginPage = () => {
           </div>
           <button
             type="submit"
-            className="w-full py-2 px-4 text-white bg-gray-800 hover:bg-gray-600 rounded-md shadow-md focus:ring-2 focus:ring-gray-500 focus:ring-offset-1 focus:outline-none"
+            className="w-full py-2 px-4 text-black bg-gray-100 hover:bg-gray-100 rounded-md shadow-md focus:ring-2 focus:ring-gray-500 focus:ring-offset-1 focus:outline-none"
             style={{
               boxShadow:
                 "0 6px 12px rgba(0, 0, 0, 0.1), 0 4px 6px rgba(0, 0, 0, 0.2)",

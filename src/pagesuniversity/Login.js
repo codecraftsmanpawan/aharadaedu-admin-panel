@@ -54,23 +54,37 @@ const Login = () => {
   };
 
   return (
-    <div className="min-h-screen flex justify-center items-center bg-gradient-to-r from-blue-500 via-blue-700 to-purple-700">
-      <div className="relative bg-white p-10 rounded-3xl shadow-2xl w-80 z-10 transform transition-transform duration-500 hover:scale-105 hover:shadow-xl">
+    <div
+      className="min-h-screen flex justify-center items-center "
+      style={{
+        background: "linear-gradient(rgb(20,18,88,255), rgb(83, 121, 181))",
+      }}
+    >
+      <div
+        className="relative bg-white p-10 rounded-3xl shadow-2xl w-95 z-10 transform transition-transform duration-500 hover:scale-105 hover:shadow-xl"
+        style={{ backgroundColor: "#142658" }}
+      >
         {/* Logo */}
-        <div className="flex justify-center mb-4">
+        {/* <div className="flex justify-center mb-4">
           <FaUniversity className="text-6xl text-blue-600" />
-        </div>
+        </div> */}
 
-        {/* Title */}
-        <h2 className="text-2xl font-semibold mb-6 text-center text-gray-800">
-          University Login
-        </h2>
+        <div className="text-center">
+          <img
+            src="https://www.aharadaedu.in/whf.png"
+            alt="Admin Panel Logo"
+            className="mx-auto mb-4 w-24 h-24"
+          />
+          <h2 className="text-3xl font-bold text-gray-100">
+            University Login Admin Panel
+          </h2>
+        </div>
 
         {/* Login Form */}
         <form onSubmit={handleLogin}>
-          <div className="mb-4">
+          <div className="mb-4 mt-8">
             <label
-              className="block text-sm font-medium text-gray-700"
+              className="block text-sm font-medium text-gray-100"
               htmlFor="username"
             >
               Username
@@ -87,7 +101,7 @@ const Login = () => {
 
           <div className="mb-6">
             <label
-              className="block text-sm font-medium text-gray-700"
+              className="block text-sm font-medium text-gray-100"
               htmlFor="password"
             >
               Password
@@ -104,8 +118,8 @@ const Login = () => {
 
           <button
             type="submit"
-            className={`w-full p-2 text-white bg-blue-500 rounded ${
-              loading ? "bg-blue-400" : "hover:bg-blue-600"
+            className={`w-full p-2 text-black bg-gray-100 rounded ${
+              loading ? "bg-gary-200" : "hover:bg-gray-400"
             }`}
             disabled={loading}
           >
