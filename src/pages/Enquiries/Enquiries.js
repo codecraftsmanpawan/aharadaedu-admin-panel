@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from "react";
 import { CSVLink } from "react-csv";
 import axios from "axios";
+import base_url from "../../config";
 
 const Enquiries = () => {
   const [enquiries, setEnquiries] = useState([]);
@@ -17,7 +18,7 @@ const Enquiries = () => {
       const config = {
         method: "get",
         maxBodyLength: Infinity,
-        url: "http://localhost:5000/api/enquiries",
+        url: `${base_url}/api/enquiries`,
         headers: {
           Authorization: `Bearer ${token}`,
         },

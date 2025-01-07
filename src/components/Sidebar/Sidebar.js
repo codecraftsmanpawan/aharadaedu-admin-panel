@@ -1,6 +1,14 @@
 import React, { useState } from "react";
 import { Link } from "react-router-dom";
-import { FaHome, FaCog, FaUsers, FaBars, FaTimes } from "react-icons/fa";
+import {
+  FaHome,
+  FaUsers,
+  FaCog,
+  FaRegClipboard,
+  FaRegListAlt,
+  FaQuestionCircle,
+  FaChalkboardTeacher,
+} from "react-icons/fa";
 
 const Sidebar = () => {
   const [isSidebarOpen, setIsSidebarOpen] = useState(true);
@@ -21,7 +29,7 @@ const Sidebar = () => {
           onClick={toggleSidebar}
           className="absolute top-4 right-4 bg-gray-600 p-2 rounded-md"
         >
-          <FaTimes className="text-white text-xl" />
+          <FaRegListAlt className="text-white text-xl" />
         </button>
       )}
 
@@ -31,7 +39,7 @@ const Sidebar = () => {
           onClick={toggleSidebar}
           className="bg-gray-600 p-2 mt-3 ml-1 mr-2 rounded-md mb-4 flex items-center justify-center"
         >
-          <FaBars className="text-white text-xl" />
+          <FaRegListAlt className="text-white text-xl" />
         </button>
       )}
 
@@ -49,15 +57,15 @@ const Sidebar = () => {
             to="/admin/admission-leads"
             className="block p-2 hover:bg-gray-600 rounded"
           >
-            <FaUsers className="inline-block mr-2" /> Admission Leads
+            <FaRegClipboard className="inline-block mr-2" /> Admission Leads
           </Link>
         </li>
         <li>
           <Link
             to="/admin/enquiries"
-            className="block p-2  mt-2 hover:bg-gray-600 rounded"
+            className="block p-2 mt-2 hover:bg-gray-600 rounded"
           >
-            <FaUsers className="inline-block mr-2" /> Total Enquiries
+            <FaQuestionCircle className="inline-block mr-2" /> Total Enquiries
           </Link>
         </li>
         <li>
@@ -65,7 +73,7 @@ const Sidebar = () => {
             to="/admin/complaints"
             className="block p-2 hover:bg-gray-600 rounded"
           >
-            <FaUsers className="inline-block mr-2" /> Complaints
+            <FaQuestionCircle className="inline-block mr-2" /> Complaints
           </Link>
         </li>
         <li>
@@ -73,7 +81,8 @@ const Sidebar = () => {
             to="/admin/applied-instructors"
             className="block p-2 hover:bg-gray-600 rounded"
           >
-            <FaUsers className="inline-block mr-2" /> Applied Instructors
+            <FaChalkboardTeacher className="inline-block mr-2" /> Applied
+            Instructors
           </Link>
         </li>
 
@@ -82,7 +91,7 @@ const Sidebar = () => {
             to="/admin/list-university"
             className="block p-2 hover:bg-gray-600 rounded"
           >
-            <FaCog className="inline-block mr-2" /> View University
+            <FaUsers className="inline-block mr-2" /> View University
           </Link>
         </li>
         <li>
@@ -107,25 +116,25 @@ const Sidebar = () => {
             to="/admin/admission-leads"
             className="block p-2 hover:bg-gray-600 rounded"
           >
-            <FaUsers className="text-2xl" />
+            <FaRegClipboard className="text-2xl" />
           </Link>
           <Link
             to="/admin/enquiries"
             className="block p-2 hover:bg-gray-600 rounded"
           >
-            <FaUsers className="text-2xl" />
+            <FaQuestionCircle className="text-2xl" />
           </Link>
           <Link
             to="/admin/complaints"
             className="block p-2 hover:bg-gray-600 rounded"
           >
-            <FaUsers className="text-2xl" />
+            <FaQuestionCircle className="text-2xl" />
           </Link>
           <Link
             to="/admin/applied-instructors"
             className="block p-2 hover:bg-gray-600 rounded"
           >
-            <FaUsers className="text-2xl" />
+            <FaChalkboardTeacher className="text-2xl" />
           </Link>
 
           <Link

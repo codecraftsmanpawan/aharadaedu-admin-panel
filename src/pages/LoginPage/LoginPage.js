@@ -4,6 +4,7 @@ import { motion } from "framer-motion";
 import { ToastContainer, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import axios from "axios";
+import base_url from "../../config";
 
 const LoginPage = () => {
   const [credentials, setCredentials] = useState({
@@ -30,7 +31,7 @@ const LoginPage = () => {
       const config = {
         method: "post",
         maxBodyLength: Infinity,
-        url: "http://localhost:5000/api/auth/login",
+        url: `${base_url}/api/auth/login`,
         headers: {
           "Content-Type": "application/json",
         },

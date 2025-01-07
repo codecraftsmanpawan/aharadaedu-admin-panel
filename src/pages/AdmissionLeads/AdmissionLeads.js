@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from "react";
 import { CSVLink } from "react-csv";
 import axios from "axios";
+import base_url from "../../config";
 
 const AdmissionLeads = () => {
   const [leads, setLeads] = useState([]);
@@ -18,7 +19,7 @@ const AdmissionLeads = () => {
       const config = {
         method: "get",
         maxBodyLength: Infinity,
-        url: "http://localhost:5000/api/admission-leads/display",
+        url: `${base_url}/api/admission-leads/display`,
         headers: {
           Authorization: `Bearer ${token}`,
         },

@@ -2,13 +2,14 @@ import React, { useEffect, useState } from "react";
 import axios from "axios";
 import { ToastContainer, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
-
+import { useNavigate } from "react-router-dom";
+import base_url from "../../config";
 const UniversityList = () => {
   const [universities, setUniversities] = useState([]);
   const [editModal, setEditModal] = useState(false);
   const [addModal, setAddModal] = useState(false);
-  const [deleteModal, setDeleteModal] = useState(false); // Added delete modal state
-  const [universityToDelete, setUniversityToDelete] = useState(null); // Store the university to delete
+  const [deleteModal, setDeleteModal] = useState(false);
+  const [universityToDelete, setUniversityToDelete] = useState(null);
   const [currentUniversity, setCurrentUniversity] = useState(null);
   const [updatedName, setUpdatedName] = useState("");
   const [updatedUsername, setUpdatedUsername] = useState("");
@@ -16,12 +17,13 @@ const UniversityList = () => {
   const [newName, setNewName] = useState("");
   const [newUsername, setNewUsername] = useState("");
   const [newPassword, setNewPassword] = useState("");
+  const navigate = useNavigate();
 
   const fetchUniversities = async () => {
     const token = localStorage.getItem("AharadaadminauthToken");
     const config = {
       method: "get",
-      url: "http://localhost:5000/api/universities",
+      url: `${base_url}/api/universities`,
       headers: {
         Authorization: `Bearer ${token}`,
       },
@@ -39,7 +41,7 @@ const UniversityList = () => {
     const token = localStorage.getItem("AharadaadminauthToken");
     const config = {
       method: "delete",
-      url: `http://localhost:5000/api/universities/${id}`,
+      url: `${base_url}/api/universities/${id}`,
       headers: {
         Authorization: `Bearer ${token}`,
       },
@@ -76,7 +78,7 @@ const UniversityList = () => {
 
     const config = {
       method: "put",
-      url: `http://localhost:5000/api/universities/${currentUniversity._id}`,
+      url: `${base_url}/api/universities/${currentUniversity._id}`,
       headers: {
         "Content-Type": "application/json",
         Authorization: `Bearer ${token}`,
@@ -116,7 +118,7 @@ const UniversityList = () => {
 
     const config = {
       method: "post",
-      url: "http://localhost:5000/api/universities",
+      url: `${base_url}/api/universities`,
       headers: {
         "Content-Type": "application/json",
         Authorization: `Bearer ${token}`,
@@ -164,7 +166,7 @@ const UniversityList = () => {
         {universities.map((university) => (
           <div
             key={university._id}
-            className="bg-white p-4 shadow-md rounded-lg"
+            className="bg-white p-4 shadow-lg hover:shadow-xl rounded-lg transition-shadow duration-300"
           >
             <h3 className="text-lg font-medium text-gray-800">
               {university.name}
@@ -181,12 +183,20 @@ const UniversityList = () => {
               </button>
               <button
                 onClick={() => {
-                  setUniversityToDelete(university); // Set university to delete
-                  setDeleteModal(true); // Show the delete confirmation modal
+                  setUniversityToDelete(university);
+                  setDeleteModal(true);
                 }}
                 className="bg-red-500 text-white px-4 py-2 rounded hover:bg-red-600"
               >
                 Delete
+              </button>
+              <button
+                onClick={() =>
+                  navigate(`/admin/list-Programs/${university._id}`)
+                }
+                className="bg-blue-500 text-white px-4 py-2 rounded hover:bg-blue-600"
+              >
+                View
               </button>
             </div>
           </div>

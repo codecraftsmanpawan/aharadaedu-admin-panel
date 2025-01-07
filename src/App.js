@@ -13,6 +13,13 @@ import Enquiries from "./pages/Enquiries/Enquiries";
 import Complaints from "./pages/Complaints/Complaints";
 import AppliedInstructors from "./pages/AppliedInstructors/AppliedInstructors";
 import UniversityList from "./pages/AddUniversity/UniversityList";
+import Programs from "./pages/Programs/Programs";
+import PrgramsBranch from "./pages/ProdramsBranch/ProdramsBranch";
+
+import UniversityLogin from "./pagesuniversity/Login";
+import UniversityDashboard from "./pagesuniversity/Dashboard";
+import UniversityEnquiries from "./pagesuniversity/Enquiries";
+import UniversityAdmissionLeads from "./pagesuniversity/Admissionleads";
 
 // Mock authentication function
 const isAuthenticated = () => {
@@ -94,6 +101,39 @@ const App = () => {
               </AdminLayout>
             </ProtectedRoute>
           }
+        />
+        <Route
+          path="/admin/list-Programs/:universityId"
+          element={
+            <ProtectedRoute>
+              <AdminLayout>
+                <Programs />
+              </AdminLayout>
+            </ProtectedRoute>
+          }
+        />
+        <Route
+          path="/admin/program/:programId"
+          element={
+            <ProtectedRoute>
+              <AdminLayout>
+                <PrgramsBranch />
+              </AdminLayout>
+            </ProtectedRoute>
+          }
+        />
+        <Route path="/university/login/admin" element={<UniversityLogin />} />
+        <Route
+          path="/university/dashboard/admin"
+          element={<UniversityDashboard />}
+        />
+        <Route
+          path="/university/enquiries/admin"
+          element={<UniversityEnquiries />}
+        />
+        <Route
+          path="/university/admissionleads/admin"
+          element={<UniversityAdmissionLeads />}
         />
       </Routes>
     </Router>
