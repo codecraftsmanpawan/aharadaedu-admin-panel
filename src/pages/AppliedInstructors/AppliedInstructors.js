@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from "react";
 import axios from "axios";
-
+import base_url from "../../config";
 const AppliedInstructors = () => {
   const [instructors, setInstructors] = useState([]);
   const [loading, setLoading] = useState(true);
@@ -11,15 +11,12 @@ const AppliedInstructors = () => {
   const fetchInstructors = async (page = 1) => {
     try {
       setLoading(true);
-      const response = await axios.get(
-        "http://localhost:5000/api/applied-instructors",
-        {
-          params: {
-            page: page,
-            itemsPerPage: 5,
-          },
-        }
-      );
+      const response = await axios.get(`${base_url}/api/applied-instructors`, {
+        params: {
+          page: page,
+          itemsPerPage: 5,
+        },
+      });
 
       // Sort instructors by dateApplied in descending order
       const sortedInstructors = response.data.instructors.sort(

@@ -3,7 +3,7 @@ import axios from "axios";
 import { FaTrash } from "react-icons/fa";
 import { toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
-
+import base_url from "../../config";
 const CollaboratorsList = () => {
   const [collaborators, setCollaborators] = useState([]);
   const [loading, setLoading] = useState(true);
@@ -21,9 +21,7 @@ const CollaboratorsList = () => {
   useEffect(() => {
     const fetchCollaborators = async () => {
       try {
-        const response = await axios.get(
-          "http://localhost:5000/api/collaborators"
-        );
+        const response = await axios.get(`${base_url}/api/collaborators`);
         setCollaborators(response.data);
         setLoading(false);
       } catch (error) {
@@ -52,7 +50,7 @@ const CollaboratorsList = () => {
     // API request to delete the selected collaborator
     try {
       const response = await axios.delete(
-        `http://localhost:5000/api/collaborators/${selectedCollaborator._id}`,
+        `${base_url}/api/collaborators/${selectedCollaborator._id}`,
         {
           headers: {
             Authorization: `Bearer ${token}`,
@@ -92,16 +90,12 @@ const CollaboratorsList = () => {
     }
 
     try {
-      const response = await axios.post(
-        "http://localhost:5000/api/collaborators",
-        data,
-        {
-          headers: {
-            Authorization: `Bearer ${token}`,
-            "Content-Type": "multipart/form-data",
-          },
-        }
-      );
+      const response = await axios.post(`${base_url}/api/collaborators`, data, {
+        headers: {
+          Authorization: `Bearer ${token}`,
+          "Content-Type": "multipart/form-data",
+        },
+      });
 
       // Show a success toast
       toast.success("Collaborator added successfully!");
@@ -153,7 +147,7 @@ const CollaboratorsList = () => {
             </button>
             <img
               className="w-full h-45 object-cover"
-              src={`http://localhost:5000${collaborator.logo}`}
+              src={`${base_url}${collaborator.logo}`}
               alt={collaborator.name}
               crossOrigin="anonymous"
             />

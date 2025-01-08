@@ -1,9 +1,9 @@
 import React, { useState, useEffect } from "react";
 import axios from "axios";
 import { useParams } from "react-router-dom";
-
+import base_url from "../../config";
 const FacultyDetail = () => {
-  const { facultyId } = useParams(); // Get the facultyId from the URL
+  const { facultyId } = useParams();
   const [faculty, setFaculty] = useState(null);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
@@ -13,7 +13,7 @@ const FacultyDetail = () => {
     const fetchFacultyData = async () => {
       try {
         const response = await axios.get(
-          `http://localhost:5000/api/faculty/${facultyId}`
+          `${base_url}/api/faculty/${facultyId}`
         );
         setFaculty(response.data);
         setLoading(false);
@@ -45,7 +45,7 @@ const FacultyDetail = () => {
         <div className="bg-white shadow-md p-6 rounded-lg">
           <div className="flex flex-col md:flex-row items-center space-x-0 md:space-x-4 p-8">
             <img
-              src={`http://localhost:5000${faculty.imageUrl}`}
+              src={`${base_url}${faculty.imageUrl}`}
               alt={faculty.facultyName}
               className="w-24 h-24 rounded-full object-cover mb-4 md:mb-0"
             />

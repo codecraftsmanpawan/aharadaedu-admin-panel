@@ -2,7 +2,7 @@ import React, { useEffect, useState } from "react";
 import axios from "axios";
 import { TrashIcon, PencilAltIcon } from "@heroicons/react/24/solid"; // Import icons
 import { useNavigate } from "react-router-dom";
-
+import base_url from "../../config";
 const FacultyCard = () => {
   const [facultyData, setFacultyData] = useState([]);
   const navigate = useNavigate();
@@ -12,7 +12,7 @@ const FacultyCard = () => {
         const config = {
           method: "get",
           maxBodyLength: Infinity,
-          url: "http://localhost:5000/api/faculty",
+          url: `${base_url}/api/faculty`,
           headers: {},
         };
 
@@ -70,7 +70,7 @@ const FacultyCard = () => {
               <img
                 src={
                   faculty.imageUrl.startsWith("/uploads")
-                    ? `http://localhost:5000${faculty.imageUrl}`
+                    ? `${base_url}${faculty.imageUrl}`
                     : faculty.imageUrl
                 }
                 alt={faculty.facultyName}

@@ -1,7 +1,8 @@
 import React, { useState } from "react";
 import Axios from "axios";
-import { toast } from "react-toastify"; // Make sure to install react-toastify
+import { toast } from "react-toastify";
 import { useNavigate } from "react-router-dom";
+import base_url from "../../config";
 
 const AddFacultyForm = () => {
   const [facultyName, setFacultyName] = useState("");
@@ -82,18 +83,14 @@ const AddFacultyForm = () => {
     // Initialize useNavigate
 
     try {
-      const response = await Axios.post(
-        "http://localhost:5000/api/faculty",
-        formData,
-        {
-          headers: {
-            "Content-Type": "multipart/form-data",
-            Authorization: `Bearer ${localStorage.getItem(
-              "AharadaadminauthToken"
-            )}`,
-          },
-        }
-      );
+      const response = await Axios.post(`${base_url}/api/faculty`, formData, {
+        headers: {
+          "Content-Type": "multipart/form-data",
+          Authorization: `Bearer ${localStorage.getItem(
+            "AharadaadminauthToken"
+          )}`,
+        },
+      });
 
       toast.success("Faculty added successfully!");
 
