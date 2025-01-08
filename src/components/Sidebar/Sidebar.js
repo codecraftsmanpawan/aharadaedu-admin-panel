@@ -96,6 +96,39 @@ const Sidebar = () => {
         </li>
         <li>
           <Link
+            to="/admin/video/feedback"
+            className="block p-2 hover:bg-gray-600 rounded"
+          >
+            <FaCog className="inline-block mr-2" />
+            Video Feedback
+          </Link>
+        </li>
+        <li>
+          <Link
+            to="/admin/testimonial"
+            className="block p-2 hover:bg-gray-600 rounded"
+          >
+            <FaCog className="inline-block mr-2" /> Testimonials
+          </Link>
+        </li>
+        <li>
+          <Link
+            to="/admin/collaboratorslist"
+            className="block p-2 hover:bg-gray-600 rounded"
+          >
+            <FaCog className="inline-block mr-2" /> Collaborators
+          </Link>
+        </li>
+        <li>
+          <Link
+            to="/admin/facultymembers"
+            className="block p-2 hover:bg-gray-600 rounded"
+          >
+            <FaCog className="inline-block mr-2" /> Faculty Members
+          </Link>
+        </li>
+        <li>
+          <Link
             to="/admin/settings"
             className="block p-2 hover:bg-gray-600 rounded"
           >
@@ -142,6 +175,30 @@ const Sidebar = () => {
             className="block p-2 hover:bg-gray-600 rounded"
           >
             <FaUsers className="text-2xl" />
+          </Link>
+          <Link
+            to="/admin/video/feedback"
+            className="block p-2 hover:bg-gray-600 rounded"
+          >
+            <FaCog className="text-2xl" />
+          </Link>
+          <Link
+            to="/admin/testimonial"
+            className="block p-2 hover:bg-gray-600 rounded"
+          >
+            <FaCog className="text-2xl" />
+          </Link>
+          <Link
+            to="/admin/collaboratorslist"
+            className="block p-2 hover:bg-gray-600 rounded"
+          >
+            <FaCog className="text-2xl" />
+          </Link>
+          <Link
+            to="/admin/facultymembers"
+            className="block p-2 hover:bg-gray-600 rounded"
+          >
+            <FaCog className="text-2xl" />
           </Link>
           <Link
             to="/admin/settings"

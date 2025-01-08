@@ -15,6 +15,12 @@ import AppliedInstructors from "./pages/AppliedInstructors/AppliedInstructors";
 import UniversityList from "./pages/AddUniversity/UniversityList";
 import Programs from "./pages/Programs/Programs";
 import PrgramsBranch from "./pages/ProdramsBranch/ProdramsBranch";
+import VideoFeedbackForm from "./pages/Videofeedbacks/Vdeofeedbacks";
+import TestimonialForm from "./pages/Testimonials/Testimonials";
+import CollaboratorsList from "./pages/Collaborators/Collaborators";
+import FacultyMembers from "./pages/Faculty/FacultyMembers";
+import FacultyMembersDetails from "./pages/Faculty/FacultyMembersDetails";
+import AddFacultyMembers from "./pages/Faculty/AddFacultyMembers";
 
 import UniversityLogin from "./pagesuniversity/Login";
 import UniversityDashboard from "./pagesuniversity/Dashboard";
@@ -122,6 +128,67 @@ const App = () => {
             </ProtectedRoute>
           }
         />
+        <Route
+          path="/admin/video/feedback"
+          element={
+            <ProtectedRoute>
+              <AdminLayout>
+                <VideoFeedbackForm />
+              </AdminLayout>
+            </ProtectedRoute>
+          }
+        />
+        <Route
+          path="/admin/testimonial"
+          element={
+            <ProtectedRoute>
+              <AdminLayout>
+                <TestimonialForm />
+              </AdminLayout>
+            </ProtectedRoute>
+          }
+        />
+        <Route
+          path="/admin/collaboratorslist"
+          element={
+            <ProtectedRoute>
+              <AdminLayout>
+                <CollaboratorsList />
+              </AdminLayout>
+            </ProtectedRoute>
+          }
+        />
+        <Route
+          path="/admin/facultymembers"
+          element={
+            <ProtectedRoute>
+              <AdminLayout>
+                <FacultyMembers />
+              </AdminLayout>
+            </ProtectedRoute>
+          }
+        />
+        <Route
+          path="/admin/faculty/:facultyId"
+          element={
+            <ProtectedRoute>
+              <AdminLayout>
+                <FacultyMembersDetails />
+              </AdminLayout>
+            </ProtectedRoute>
+          }
+        />
+        <Route
+          path="/admin/addfaculty"
+          element={
+            <ProtectedRoute>
+              <AdminLayout>
+                <AddFacultyMembers />
+              </AdminLayout>
+            </ProtectedRoute>
+          }
+        />
+
         <Route path="/university/login/admin" element={<UniversityLogin />} />
         <Route
           path="/university/dashboard/admin"

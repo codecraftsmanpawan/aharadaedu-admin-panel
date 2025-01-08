@@ -23,7 +23,7 @@ const Navbar = () => {
 
   // Change password functionality
   const handleChangePassword = () => {
-    alert("Change Password clicked"); // You can replace this with your actual password change logic
+    alert("Change Password clicked"); 
   };
 
   return (

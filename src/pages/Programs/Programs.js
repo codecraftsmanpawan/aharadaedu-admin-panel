@@ -184,11 +184,20 @@ const ProgramsList = () => {
   // Delete a program
   const deleteProgram = async () => {
     try {
-      await axios.delete(`${base_url}/api/programs/${programToDelete}`, {
-        headers: {
-          Authorization: `Bearer ${token}`,
-        },
-      });
+      // Log the program ID to be deleted
+      console.log(`Attempting to delete program with ID: ${programToDelete}`);
+
+      const response = await axios.delete(
+        `${base_url}/api/programs/${programToDelete}`,
+        {
+          headers: {
+            Authorization: `Bearer ${token}`,
+          },
+        }
+      );
+
+      // Log the response from the backend after successful deletion
+      console.log("Response from server:", response);
 
       setPrograms(
         programs.filter((program) => program._id !== programToDelete)
@@ -196,6 +205,8 @@ const ProgramsList = () => {
       setIsConfirmDeleteOpen(false);
       toast.success("Program deleted successfully!");
     } catch (error) {
+      // Log any errors that occur during the process
+      console.error("Error deleting program:", error);
       handleError(error);
       setIsConfirmDeleteOpen(false);
     }
