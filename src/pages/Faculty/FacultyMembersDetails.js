@@ -2,6 +2,7 @@ import React, { useState, useEffect } from "react";
 import axios from "axios";
 import { useParams } from "react-router-dom";
 import base_url from "../../config";
+
 const FacultyDetail = () => {
   const { facultyId } = useParams();
   const [faculty, setFaculty] = useState(null);
@@ -117,6 +118,18 @@ const FacultyDetail = () => {
                 <li key={course._id} className="text-lg text-gray-700">
                   {course.courseName} - Semester: {course.semester} - Year:{" "}
                   {course.year}
+                </li>
+              ))}
+            </ul>
+          </div>
+
+          {/* Display Qualifications */}
+          <div className="mt-6">
+            <h3 className="text-xl font-semibold">Qualifications</h3>
+            <ul className="list-disc pl-5 mt-2">
+              {faculty.qualifications.map((qualification, index) => (
+                <li key={index} className="text-lg text-gray-700">
+                  {qualification}
                 </li>
               ))}
             </ul>

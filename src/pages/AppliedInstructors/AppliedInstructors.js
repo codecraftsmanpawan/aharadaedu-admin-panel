@@ -14,7 +14,7 @@ const AppliedInstructors = () => {
       const response = await axios.get(`${base_url}/api/applied-instructors`, {
         params: {
           page: page,
-          itemsPerPage: 5,
+          itemsPerPage: 10,
         },
       });
 

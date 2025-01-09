@@ -129,6 +129,30 @@ const Sidebar = () => {
         </li>
         <li>
           <Link
+            to="/admin/placementteams"
+            className="block p-2 hover:bg-gray-600 rounded"
+          >
+            <FaCog className="inline-block mr-2" /> Placement Teams
+          </Link>
+        </li>
+        <li>
+          <Link
+            to="/admin/placedstudent"
+            className="block p-2 hover:bg-gray-600 rounded"
+          >
+            <FaCog className="inline-block mr-2" /> Placed Student
+          </Link>
+        </li>
+        <li>
+          <Link
+            to="/admin/teammember"
+            className="block p-2 hover:bg-gray-600 rounded"
+          >
+            <FaCog className="inline-block mr-2" /> Team Members
+          </Link>
+        </li>
+        <li>
+          <Link
             to="/admin/settings"
             className="block p-2 hover:bg-gray-600 rounded"
           >
@@ -196,6 +220,24 @@ const Sidebar = () => {
           </Link>
           <Link
             to="/admin/facultymembers"
+            className="block p-2 hover:bg-gray-600 rounded"
+          >
+            <FaCog className="text-2xl" />
+          </Link>
+          <Link
+            to="/admin/placementteams"
+            className="block p-2 hover:bg-gray-600 rounded"
+          >
+            <FaCog className="text-2xl" />
+          </Link>
+          <Link
+            to="/admin/placedstudent"
+            className="block p-2 hover:bg-gray-600 rounded"
+          >
+            <FaCog className="text-2xl" />
+          </Link>
+          <Link
+            to="/admin/teammember"
             className="block p-2 hover:bg-gray-600 rounded"
           >
             <FaCog className="text-2xl" />

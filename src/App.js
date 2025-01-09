@@ -21,6 +21,9 @@ import CollaboratorsList from "./pages/Collaborators/Collaborators";
 import FacultyMembers from "./pages/Faculty/FacultyMembers";
 import FacultyMembersDetails from "./pages/Faculty/FacultyMembersDetails";
 import AddFacultyMembers from "./pages/Faculty/AddFacultyMembers";
+import PlacementTeams from "./pages/PlacementTeams/PlacementTeams";
+import PlacedStudent from "./pages/PlacedStudent/PlacedStudent";
+import TeamMember from "./pages/TeamMember/TeamMember";
 
 import UniversityLogin from "./pagesuniversity/Login";
 import UniversityDashboard from "./pagesuniversity/Dashboard";
@@ -188,7 +191,36 @@ const App = () => {
             </ProtectedRoute>
           }
         />
-
+        <Route
+          path="/admin/placementteams"
+          element={
+            <ProtectedRoute>
+              <AdminLayout>
+                <PlacementTeams />
+              </AdminLayout>
+            </ProtectedRoute>
+          }
+        />
+        <Route
+          path="/admin/placedstudent"
+          element={
+            <ProtectedRoute>
+              <AdminLayout>
+                <PlacedStudent />
+              </AdminLayout>
+            </ProtectedRoute>
+          }
+        />
+        <Route
+          path="/admin/teammember"
+          element={
+            <ProtectedRoute>
+              <AdminLayout>
+                <TeamMember />
+              </AdminLayout>
+            </ProtectedRoute>
+          }
+        />
         <Route path="/university/login/admin" element={<UniversityLogin />} />
         <Route
           path="/university/dashboard/admin"

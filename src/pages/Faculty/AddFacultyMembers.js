@@ -16,14 +16,17 @@ const AddFacultyForm = () => {
   const [aboutResearchInterests, setAboutResearchInterests] = useState("");
   const [image, setImage] = useState(null);
 
-  // For dynamic publications and courses
+  // For dynamic publications, courses, and qualifications
   const [publications, setPublications] = useState([
     { title: "", journal: "", year: "", link: "" },
   ]);
   const [coursesTaught, setCoursesTaught] = useState([
     { courseName: "", semester: "", year: "" },
   ]);
+  const [qualifications, setQualifications] = useState([""]); // Initialize qualifications as an array
+
   const navigate = useNavigate();
+
   const handleImageChange = (e) => {
     setImage(e.target.files[0]);
   };
@@ -64,6 +67,21 @@ const AddFacultyForm = () => {
     setCoursesTaught(updatedCourses);
   };
 
+  const handleQualificationChange = (index, value) => {
+    const updatedQualifications = [...qualifications];
+    updatedQualifications[index] = value;
+    setQualifications(updatedQualifications);
+  };
+
+  const addQualification = () => {
+    setQualifications([...qualifications, ""]);
+  };
+
+  const removeQualification = (index) => {
+    const updatedQualifications = qualifications.filter((_, i) => i !== index);
+    setQualifications(updatedQualifications);
+  };
+
   const handleSubmit = async (e) => {
     e.preventDefault();
 
@@ -78,9 +96,8 @@ const AddFacultyForm = () => {
     formData.append("aboutResearchInterests", aboutResearchInterests);
     formData.append("publications", JSON.stringify(publications));
     formData.append("coursesTaught", JSON.stringify(coursesTaught));
+    formData.append("qualifications", JSON.stringify(qualifications));
     if (image) formData.append("image", image);
-
-    // Initialize useNavigate
 
     try {
       const response = await Axios.post(`${base_url}/api/faculty`, formData, {
@@ -93,8 +110,6 @@ const AddFacultyForm = () => {
       });
 
       toast.success("Faculty added successfully!");
-
-      // Navigate to the faculty members page
       navigate("/admin/facultymembers");
       console.log("Faculty added successfully:", response.data);
     } catch (error) {
@@ -125,7 +140,6 @@ const AddFacultyForm = () => {
       <form onSubmit={handleSubmit} className="space-y-4">
         {/* Profile Image */}
         <div className="flex flex-col items-center mb-4">
-          {/* Profile Image Preview */}
           <div className="flex justify-center mb-4">
             {image ? (
               <img
@@ -146,7 +160,7 @@ const AddFacultyForm = () => {
               htmlFor="image"
               className="block text-sm font-medium text-gray-700"
             >
-              Profile Image:
+              Profile Image: <span className="text-red-500">*</span>
             </label>
             <input
               type="file"
@@ -158,14 +172,14 @@ const AddFacultyForm = () => {
           </div>
         </div>
 
-        {/* First Row */}
+        {/* Other Fields */}
         <div className="grid grid-cols-2 gap-4">
           <div>
             <label
               htmlFor="facultyName"
               className="block text-sm font-medium text-gray-700"
             >
-              Faculty Name:
+              Faculty Name: <span className="text-red-500">*</span>
             </label>
             <input
               type="text"
@@ -181,7 +195,7 @@ const AddFacultyForm = () => {
               htmlFor="designation"
               className="block text-sm font-medium text-gray-700"
             >
-              Designation:
+              Designation: <span className="text-red-500">*</span>
             </label>
             <input
               type="text"
@@ -194,14 +208,13 @@ const AddFacultyForm = () => {
           </div>
         </div>
 
-        {/* Second Row */}
         <div className="grid grid-cols-2 gap-4">
           <div>
             <label
               htmlFor="workshopsConducted"
               className="block text-sm font-medium text-gray-700"
             >
-              Workshops Conducted:
+              Workshops Conducted: <span className="text-red-500">*</span>
             </label>
             <input
               type="text"
@@ -217,7 +230,7 @@ const AddFacultyForm = () => {
               htmlFor="yearsOfExperience"
               className="block text-sm font-medium text-gray-700"
             >
-              Years of Experience:
+              Years of Experience: <span className="text-red-500">*</span>
             </label>
             <input
               type="number"
@@ -230,14 +243,13 @@ const AddFacultyForm = () => {
           </div>
         </div>
 
-        {/* Third Row */}
         <div className="grid grid-cols-2 gap-4">
           <div>
             <label
               htmlFor="email"
               className="block text-sm font-medium text-gray-700"
             >
-              Email:
+              Email: <span className="text-red-500">*</span>
             </label>
             <input
               type="email"
@@ -253,7 +265,7 @@ const AddFacultyForm = () => {
               htmlFor="linkedin"
               className="block text-sm font-medium text-gray-700"
             >
-              LinkedIn:
+              LinkedIn: <span className="text-red-500">*</span>
             </label>
             <input
               type="text"
@@ -273,7 +285,7 @@ const AddFacultyForm = () => {
               htmlFor="aboutResearchInterests"
               className="block text-sm font-medium text-gray-700"
             >
-              About Us:
+              About Us: <span className="text-red-500">*</span>
             </label>
             <textarea
               id="aboutResearchInterests"
@@ -283,6 +295,42 @@ const AddFacultyForm = () => {
             />
           </div>
         </div>
+        {/* Qualifications */}
+        <div className="mt-4">
+          <label className="block text-sm font-medium text-gray-700">
+            Qualifications: <span className="text-red-500">*</span>
+          </label>
+          <button
+            type="button"
+            onClick={addQualification}
+            className="text-blue-500 mt-4"
+          >
+            Add Qualification
+          </button>
+          <div className="flex flex-wrap gap-4 mt-4">
+            {qualifications.map((qualification, index) => (
+              <div key={index} className="flex space-x-4 w-full">
+                <input
+                  type="text"
+                  value={qualification}
+                  onChange={(e) =>
+                    handleQualificationChange(index, e.target.value)
+                  }
+                  placeholder="Qualification"
+                  className="mt-1 block w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-indigo-500 focus:border-indigo-500"
+                />
+                <button
+                  type="button"
+                  onClick={() => removeQualification(index)}
+                  className="text-red-500"
+                >
+                  Remove
+                </button>
+              </div>
+            ))}
+          </div>
+        </div>
+
         <div>
           <label className="block text-sm font-medium text-gray-700">
             Publications:
@@ -397,7 +445,6 @@ const AddFacultyForm = () => {
             ))}
           </div>
         </div>
-
         <button
           type="submit"
           className="mt-4 w-full py-2 px-4 bg-indigo-600 text-white rounded-lg hover:bg-indigo-700"

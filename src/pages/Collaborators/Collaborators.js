@@ -131,34 +131,61 @@ const CollaboratorsList = () => {
           Add Collaborator
         </button>
       </div>
-      <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
-        {collaborators.map((collaborator) => (
-          <div
-            key={collaborator._id}
-            className="bg-white shadow-lg rounded-lg overflow-hidden relative"
-          >
-            {/* Delete Icon */}
-            <button
-              className="absolute top-2 right-2 bg-red-600 text-white p-2 rounded-full hover:bg-red-500"
-              onClick={() => openModal(collaborator)}
-              title="Delete Collaborator"
-            >
-              <FaTrash />
-            </button>
-            <img
-              className="w-full h-45 object-cover"
-              src={`${base_url}${collaborator.logo}`}
-              alt={collaborator.name}
-              crossOrigin="anonymous"
-            />
-            <div className="p-4">
-              <h3 className="text-lg font-semibold text-gray-900">
-                {collaborator.name}
-              </h3>
-              <p className="text-sm text-gray-600">{collaborator.website}</p>
-            </div>
-          </div>
-        ))}
+      <div className="overflow-x-auto">
+        <table className="min-w-full bg-white border border-gray-200">
+          <thead>
+            <tr className="bg-gray-100 text-left">
+              <th className="px-6 py-3 border-b font-medium text-gray-700">
+                Logo
+              </th>
+              <th className="px-6 py-3 border-b font-medium text-gray-700">
+                Name
+              </th>
+              <th className="px-6 py-3 border-b font-medium text-gray-700">
+                Website
+              </th>
+              <th className="px-6 py-3 border-b font-medium text-gray-700 text-center">
+                Actions
+              </th>
+            </tr>
+          </thead>
+          <tbody>
+            {collaborators.map((collaborator) => (
+              <tr key={collaborator._id} className="hover:bg-gray-50">
+                {/* Logo Column */}
+                <td className="px-6 py-4 border-b">
+                  <img
+                    src={`${base_url}${collaborator.logo}`}
+                    alt={collaborator.name}
+                    className="w-16 h-16 object-cover rounded-full"
+                    crossOrigin="anonymous"
+                  />
+                </td>
+
+                {/* Name Column */}
+                <td className="px-6 py-4 border-b font-semibold">
+                  {collaborator.name}
+                </td>
+
+                {/* Website Column */}
+                <td className="px-6 py-4 border-b text-gray-500">
+                  {collaborator.website}
+                </td>
+
+                {/* Actions Column */}
+                <td className="px-6 py-4 border-b text-center">
+                  <button
+                    onClick={() => openModal(collaborator)}
+                    className="text-red-500 hover:bg-red-100 px-3 py-2 rounded-full"
+                    title="Delete Collaborator"
+                  >
+                    <FaTrash size={20} />
+                  </button>
+                </td>
+              </tr>
+            ))}
+          </tbody>
+        </table>
       </div>
 
       {/* Confirmation Modal */}
