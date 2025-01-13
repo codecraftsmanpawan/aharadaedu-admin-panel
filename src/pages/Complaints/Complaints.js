@@ -1,57 +1,38 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
+import axios from "axios";
 import { CSVLink } from "react-csv";
-
+import base_url from "../../config";
 const Complaints = () => {
   const [search, setSearch] = useState("");
   const [filterCampus, setFilterCampus] = useState("");
   const [filterStatus, setFilterStatus] = useState("");
   const [currentPage, setCurrentPage] = useState(1);
   const itemsPerPage = 5;
+  const [allComplaints, setAllComplaints] = useState([]);
 
-  const allComplaints = [
-    {
-      name: "Alice Johnson",
-      campus: "Campus A",
-      admissionNumber: "A001",
-      complaintType: "Harassment",
-      complaintDetails: "Facing issues with a peer.",
-      documentProof: "harassment_proof.pdf",
-      date: "2023-12-20",
-      status: "Pending",
-    },
-    {
-      name: "Bob Williams",
-      campus: "Campus B",
-      admissionNumber: "B002",
-      complaintType: "Infrastructure",
-      complaintDetails: "Classroom chairs are broken.",
-      documentProof: "chair_issue.jpg",
-      date: "2023-12-19",
-      status: "Resolved",
-    },
-    {
-      name: "Charlie Brown",
-      campus: "Campus C",
-      admissionNumber: "C003",
-      complaintType: "Academic",
-      complaintDetails: "Teacher unavailable for doubts.",
-      documentProof: "no_teacher_support.pdf",
-      date: "2023-12-18",
-      status: "Pending",
-    },
-  ];
+  useEffect(() => {
+    // Fetch complaints from API when component mounts
+    const fetchComplaints = async () => {
+      try {
+        const response = await axios.get(`${base_url}/api/complaints`);
+        setAllComplaints(response.data.complaints); // Store the fetched complaints
+      } catch (error) {
+        console.error("Error fetching complaints:", error);
+      }
+    };
+
+    fetchComplaints();
+  }, []);
 
   // Filter and search logic
   const filteredComplaints = allComplaints.filter((complaint) => {
     return (
-      (complaint.name.toLowerCase().includes(search.toLowerCase()) ||
+      (complaint.studentName.toLowerCase().includes(search.toLowerCase()) ||
         complaint.admissionNumber
           .toLowerCase()
           .includes(search.toLowerCase()) ||
         complaint.complaintType.toLowerCase().includes(search.toLowerCase()) ||
-        complaint.complaintDetails
-          .toLowerCase()
-          .includes(search.toLowerCase())) &&
+        complaint.description.toLowerCase().includes(search.toLowerCase())) &&
       (!filterCampus || complaint.campus === filterCampus) &&
       (!filterStatus || complaint.status === filterStatus)
     );
@@ -111,11 +92,12 @@ const Complaints = () => {
           onChange={(e) => setFilterCampus(e.target.value)}
         >
           <option value="">All Campuses</option>
-          <option value="Campus A">Campus A</option>
-          <option value="Campus B">Campus B</option>
-          <option value="Campus C">Campus C</option>
+          <option value="meerut">IIMT University, Meerut</option>
+          <option value="indore">SAGE University, Indore</option>
+          <option value="subharti">Subharti University, Meerut</option>
+          <option value="dev-bhoomi">Dev Bhoomi Uttarakhand University</option>
         </select>
-        <select
+        {/* <select
           className="border border-gray-300 rounded p-2 w-full sm:w-auto"
           value={filterStatus}
           onChange={(e) => setFilterStatus(e.target.value)}
@@ -123,7 +105,7 @@ const Complaints = () => {
           <option value="">All Statuses</option>
           <option value="Pending">Pending</option>
           <option value="Resolved">Resolved</option>
-        </select>
+        </select> */}
       </div>
 
       {filteredComplaints.length > 0 ? (
@@ -147,32 +129,34 @@ const Complaints = () => {
                   Document Proof
                 </th>
                 <th className="p-3 border-b text-left text-gray-600">Date</th>
-                <th className="p-3 border-b text-left text-gray-600">Status</th>
+                {/* <th className="p-3 border-b text-left text-gray-600">Status</th> */}
               </tr>
             </thead>
             <tbody>
               {displayedComplaints.map((complaint, index) => (
-                <tr key={index} className="hover:bg-gray-50">
+                <tr key={complaint._id} className="hover:bg-gray-50">
                   <td className="p-3 border-b">
                     {(currentPage - 1) * itemsPerPage + index + 1}
                   </td>
-                  <td className="p-3 border-b">{complaint.name}</td>
+                  <td className="p-3 border-b">{complaint.studentName}</td>
                   <td className="p-3 border-b">{complaint.campus}</td>
                   <td className="p-3 border-b">{complaint.admissionNumber}</td>
                   <td className="p-3 border-b">{complaint.complaintType}</td>
-                  <td className="p-3 border-b">{complaint.complaintDetails}</td>
+                  <td className="p-3 border-b">{complaint.description}</td>
                   <td className="p-3 border-b">
                     <a
-                      href={`/documents/${complaint.documentProof}`}
+                      href={`${base_url}${complaint.attachments[0]}`}
                       className="text-blue-500 underline"
                       target="_blank"
                       rel="noopener noreferrer"
                     >
-                      {complaint.documentProof}
+                      {complaint.attachments[0].split("/").pop()}
                     </a>
                   </td>
-                  <td className="p-3 border-b">{complaint.date}</td>
                   <td className="p-3 border-b">
+                    {new Date(complaint.createdAt).toLocaleDateString()}
+                  </td>
+                  {/* <td className="p-3 border-b">
                     <span
                       className={`px-2 py-1 rounded text-sm font-medium ${getStatusColor(
                         complaint.status
@@ -180,7 +164,7 @@ const Complaints = () => {
                     >
                       {complaint.status}
                     </span>
-                  </td>
+                  </td> */}
                 </tr>
               ))}
             </tbody>

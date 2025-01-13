@@ -14,6 +14,7 @@ const ProgramsList = () => {
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [isConfirmDeleteOpen, setIsConfirmDeleteOpen] = useState(false);
   const [programToDelete, setProgramToDelete] = useState(null);
+  const [universityToDelete, setUniversityToDelete] = useState(null);
   const [newProgram, setNewProgram] = useState({
     name: "",
     shortname: "",
@@ -25,15 +26,30 @@ const ProgramsList = () => {
     university: "",
   });
   const [editingProgram, setEditingProgram] = useState(null);
+  const [universityDetails, setUniversityDetails] = useState(null);
   const navigate = useNavigate();
-  // Retrieve the universityId from the URL parameters
-  const { universityId } = useParams();
+  const { universityId, universityName } = useParams();
 
-  // Fetch the Authorization token from localStorage
   const token = localStorage.getItem("AharadaadminauthToken");
 
-  // Fetch the programs when the component mounts
+  // Fetch university details and programs when the component mounts
   useEffect(() => {
+    const fetchUniversityDetails = async () => {
+      try {
+        const response = await axios.get(
+          `${base_url}/api/universitiesDetails/${decodeURIComponent(
+            universityName
+          )}`
+        );
+        if (response.data && response.data.university) {
+          setUniversityDetails(response.data.university);
+        }
+      } catch (error) {
+        // setError("Failed to fetch university details.");
+        // toast.error("Failed to fetch university details.");
+      }
+    };
+
     const fetchPrograms = async () => {
       try {
         if (!token) {
@@ -70,8 +86,9 @@ const ProgramsList = () => {
       }
     };
 
+    fetchUniversityDetails();
     fetchPrograms();
-  }, [universityId, token]);
+  }, [universityId, universityName, token]);
 
   // Handle input changes in the modal
   const handleInputChange = (e) => {
@@ -105,7 +122,6 @@ const ProgramsList = () => {
   // Toggle modal visibility
   const toggleModal = () => {
     if (isModalOpen) {
-      // Reset the program state when closing the modal
       setEditingProgram(null);
       setNewProgram({
         name: "",
@@ -171,22 +187,16 @@ const ProgramsList = () => {
       );
 
       setPrograms((prevPrograms) => [...prevPrograms, response.data.data]);
-      setIsModalOpen(false); // Close the modal after adding the program
+      setIsModalOpen(false);
       toast.success("Program added successfully!");
-
-      // Reload the page after a successful submission
       window.location.reload();
     } catch (error) {
       handleError(error);
     }
   };
 
-  // Delete a program
   const deleteProgram = async () => {
     try {
-      // Log the program ID to be deleted
-      console.log(`Attempting to delete program with ID: ${programToDelete}`);
-
       const response = await axios.delete(
         `${base_url}/api/programs/${programToDelete}`,
         {
@@ -195,24 +205,38 @@ const ProgramsList = () => {
           },
         }
       );
-
-      // Log the response from the backend after successful deletion
-      console.log("Response from server:", response);
-
       setPrograms(
         programs.filter((program) => program._id !== programToDelete)
       );
       setIsConfirmDeleteOpen(false);
       toast.success("Program deleted successfully!");
     } catch (error) {
-      // Log any errors that occur during the process
       console.error("Error deleting program:", error);
       handleError(error);
       setIsConfirmDeleteOpen(false);
     }
   };
 
-  // Edit a program
+  const deleteUniversityDetails = async () => {
+    try {
+      const response = await axios.delete(
+        `${base_url}/api/universitiesDetails/${universityToDelete}`,
+        {
+          headers: {
+            Authorization: `Bearer ${token}`,
+          },
+        }
+      );
+      toast.success("University deleted successfully!");
+
+      // Reload the page to reflect changes after deletion
+      window.location.reload(); // This will refresh the page
+    } catch (error) {
+      console.error("Error deleting university:", error);
+      handleError(error);
+    }
+  };
+
   const editProgram = (program) => {
     setEditingProgram(program);
     setNewProgram({
@@ -223,7 +247,6 @@ const ProgramsList = () => {
     setIsModalOpen(true);
   };
 
-  // Handle error messages from API
   const handleError = (error) => {
     if (error.response && error.response.data) {
       toast.error(
@@ -233,13 +256,15 @@ const ProgramsList = () => {
       toast.error("An unknown error occurred. Please try again.");
     }
   };
+
   const viewProgram = (programId) => {
     navigate(`/admin/program/${programId}`);
   };
+
   return (
     <div className="container mx-auto p-4">
       <div className="mb-6 flex items-center justify-between">
-        <h1 className="text-3xl font-bold"> Programs Offered List</h1>
+        <h1 className="text-3xl font-bold">Programs Offered List</h1>
         <button
           onClick={() => {
             setEditingProgram(null);
@@ -250,6 +275,115 @@ const ProgramsList = () => {
           Add Program
         </button>
       </div>
+      {/* Display university image */}
+      {universityDetails && universityDetails.image && (
+        <div className="mt-4">
+          <img
+            src={`${base_url}${universityDetails.image}`}
+            alt={`${universityDetails.name} image`}
+            className="w-full h-64 object-cover rounded-md"
+          />
+        </div>
+      )}
+
+      {/* Display University Details */}
+      {universityDetails && (
+        <div className="mb-6 p-4 bg-gray-100 rounded shadow-lg">
+          <h2 className="text-xl font-bold">{universityDetails.name}</h2>
+          <p className="text-gray-700">
+            {universityDetails.location || "Location not available"}
+          </p>
+          <p className="text-gray-500">
+            Established Year:{" "}
+            {universityDetails.establishedYear || "Year not available"}
+          </p>
+          <p className="text-gray-500">
+            Ranking: {universityDetails.ranking || "Ranking not available"}
+          </p>
+
+          {/* Display description with dangerous HTML content */}
+          <div
+            className="text-gray-700"
+            dangerouslySetInnerHTML={{
+              __html:
+                universityDetails.description || "Description not available",
+            }}
+          ></div>
+
+          <div className="mt-4">
+            <h3 className="font-semibold text-gray-700">Courses Offered</h3>
+            <ul className="list-disc pl-5">
+              {universityDetails.coursesOffered &&
+              universityDetails.coursesOffered.length > 0 ? (
+                universityDetails.coursesOffered.map((course, index) => (
+                  <li key={index} className="text-gray-600">
+                    {course}
+                  </li>
+                ))
+              ) : (
+                <li className="text-gray-600">No courses available</li>
+              )}
+            </ul>
+          </div>
+
+          <div className="mt-4">
+            <h3 className="font-semibold text-gray-700">Specializations</h3>
+            <p className="text-gray-600">
+              {universityDetails.specializations ||
+                "No specializations available"}
+            </p>
+          </div>
+
+          <div className="mt-4">
+            <h3 className="font-semibold text-gray-700">Certifications</h3>
+            <p className="text-gray-600">
+              {universityDetails.certifications ||
+                "No certifications available"}
+            </p>
+          </div>
+
+          <div className="mt-4">
+            <h3 className="font-semibold text-gray-700">Recognized By</h3>
+            <ul className="list-disc pl-5">
+              {universityDetails.recognizedBy &&
+              universityDetails.recognizedBy.length > 0 ? (
+                universityDetails.recognizedBy.map((item, index) => (
+                  <li key={index} className="text-gray-600">
+                    {item}
+                  </li>
+                ))
+              ) : (
+                <li className="text-gray-600">No recognitions available</li>
+              )}
+            </ul>
+          </div>
+
+          <div className="mt-4">
+            <h3 className="font-semibold text-gray-700">Website</h3>
+            <a
+              href={universityDetails.website}
+              target="_blank"
+              rel="noopener noreferrer"
+              className="text-blue-500 hover:underline"
+            >
+              {universityDetails.website || "Website not available"}
+            </a>
+          </div>
+
+          <div className="mt-6 flex justify-between">
+            <button
+              onClick={() => {
+                setUniversityToDelete(universityDetails._id);
+                setIsConfirmDeleteOpen(true);
+              }}
+              className="bg-red-500 text-white px-4 py-2 rounded hover:bg-red-600"
+            >
+              Delete University Details
+            </button>
+          </div>
+        </div>
+      )}
+
       <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
         {programs.length > 0 ? (
           programs.map((program) => (
@@ -320,6 +454,14 @@ const ProgramsList = () => {
       {isConfirmDeleteOpen && (
         <ConfirmDeleteModal
           deleteProgram={deleteProgram}
+          cancelDelete={() => setIsConfirmDeleteOpen(false)}
+        />
+      )}
+
+      {/* Confirm Delete University Modal */}
+      {universityToDelete && isConfirmDeleteOpen && (
+        <ConfirmDeleteModal
+          deleteProgram={deleteUniversityDetails}
           cancelDelete={() => setIsConfirmDeleteOpen(false)}
         />
       )}

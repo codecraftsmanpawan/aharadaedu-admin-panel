@@ -13,6 +13,7 @@ import Enquiries from "./pages/Enquiries/Enquiries";
 import Complaints from "./pages/Complaints/Complaints";
 import AppliedInstructors from "./pages/AppliedInstructors/AppliedInstructors";
 import UniversityList from "./pages/AddUniversity/UniversityList";
+import UniversityDetails from "./pages/AddUniversity/UniversityDetails";
 import Programs from "./pages/Programs/Programs";
 import PrgramsBranch from "./pages/ProdramsBranch/ProdramsBranch";
 import VideoFeedbackForm from "./pages/Videofeedbacks/Vdeofeedbacks";
@@ -24,6 +25,16 @@ import AddFacultyMembers from "./pages/Faculty/AddFacultyMembers";
 import PlacementTeams from "./pages/PlacementTeams/PlacementTeams";
 import PlacedStudent from "./pages/PlacedStudent/PlacedStudent";
 import TeamMember from "./pages/TeamMember/TeamMember";
+import Events from "./pages/Events/Events";
+import EventDetails from "./pages/Events/EventDetails";
+import Internship from "./pages/Internships/Internships";
+import Alumni from "./pages/Alumni/Alumni";
+import Notices from "./pages/Notice/Notice";
+import Blog from "./pages/Blogs/Blogs";
+import BlogPost from "./pages/Blogs/BlogPost";
+import BlogDetail from "./pages/Blogs/BlogDetail";
+import BirthdayWish from "./pages/BirthdayWish/BirthdayWishList";
+import BranchDetails from "./pages/BranchDetsils/BranchDetails";
 
 import UniversityLogin from "./pagesuniversity/Login";
 import UniversityDashboard from "./pagesuniversity/Dashboard";
@@ -112,7 +123,17 @@ const App = () => {
           }
         />
         <Route
-          path="/admin/list-Programs/:universityId"
+          path="/admin/university-details"
+          element={
+            <ProtectedRoute>
+              <AdminLayout>
+                <UniversityDetails />
+              </AdminLayout>
+            </ProtectedRoute>
+          }
+        />
+        <Route
+          path="/admin/list-Programs/:universityId/:universityName"
           element={
             <ProtectedRoute>
               <AdminLayout>
@@ -217,6 +238,106 @@ const App = () => {
             <ProtectedRoute>
               <AdminLayout>
                 <TeamMember />
+              </AdminLayout>
+            </ProtectedRoute>
+          }
+        />
+        <Route
+          path="/admin/events"
+          element={
+            <ProtectedRoute>
+              <AdminLayout>
+                <Events />
+              </AdminLayout>
+            </ProtectedRoute>
+          }
+        />
+        <Route
+          path="/admin/event/:title"
+          element={
+            <ProtectedRoute>
+              <AdminLayout>
+                <EventDetails />
+              </AdminLayout>
+            </ProtectedRoute>
+          }
+        />
+        <Route
+          path="/admin/internship"
+          element={
+            <ProtectedRoute>
+              <AdminLayout>
+                <Internship />
+              </AdminLayout>
+            </ProtectedRoute>
+          }
+        />
+        <Route
+          path="/admin/alumni"
+          element={
+            <ProtectedRoute>
+              <AdminLayout>
+                <Alumni />
+              </AdminLayout>
+            </ProtectedRoute>
+          }
+        />
+        <Route
+          path="/admin/notices"
+          element={
+            <ProtectedRoute>
+              <AdminLayout>
+                <Notices />
+              </AdminLayout>
+            </ProtectedRoute>
+          }
+        />
+        <Route
+          path="/admin/blog"
+          element={
+            <ProtectedRoute>
+              <AdminLayout>
+                <Blog />
+              </AdminLayout>
+            </ProtectedRoute>
+          }
+        />
+        <Route
+          path="/admin/blogpost"
+          element={
+            <ProtectedRoute>
+              <AdminLayout>
+                <BlogPost />
+              </AdminLayout>
+            </ProtectedRoute>
+          }
+        />
+        <Route
+          path="/admin/blogDetail/:id"
+          element={
+            <ProtectedRoute>
+              <AdminLayout>
+                <BlogDetail />
+              </AdminLayout>
+            </ProtectedRoute>
+          }
+        />
+        <Route
+          path="/admin/birthdayWish"
+          element={
+            <ProtectedRoute>
+              <AdminLayout>
+                <BirthdayWish />
+              </AdminLayout>
+            </ProtectedRoute>
+          }
+        />
+        <Route
+          path="/admin/branch/:branchId"
+          element={
+            <ProtectedRoute>
+              <AdminLayout>
+                <BranchDetails />
               </AdminLayout>
             </ProtectedRoute>
           }

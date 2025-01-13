@@ -4,11 +4,13 @@ import { ToastContainer, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import { FaTrash } from "react-icons/fa";
 import base_url from "../../config";
+
 const TeamMember = () => {
   const [name, setName] = useState("");
   const [email, setEmail] = useState("");
   const [linkedin, setLinkedin] = useState("");
   const [about, setAbout] = useState("");
+  const [designation, setDesignation] = useState("");
   const [profileImage, setProfileImage] = useState(null);
   const [loading, setLoading] = useState(false);
   const [message, setMessage] = useState("");
@@ -36,6 +38,7 @@ const TeamMember = () => {
     formData.append("email", email);
     formData.append("linkedin", linkedin);
     formData.append("about", about);
+    formData.append("designation", designation);
     formData.append("profileImage", profileImage);
 
     try {
@@ -60,8 +63,18 @@ const TeamMember = () => {
       }, 1000);
     } catch (error) {
       setLoading(false);
+
+      // Custom error handling
+      if (error.response && error.response.data) {
+        toast.error(
+          error.response.data.message ||
+            "Failed to add team member. Please try again."
+        );
+      } else {
+        toast.error("Failed to add team member. Please try again.");
+      }
+
       setMessage("Error adding team member.");
-      toast.error("Error adding team member.");
     }
   };
 
@@ -141,6 +154,7 @@ const TeamMember = () => {
                   <h3 className="text-xl font-semibold text-gray-800 truncate">
                     {member.name}
                   </h3>
+                  <p className="text-gray-700 mt-2">{member.designation}</p>{" "}
                   <p className="text-gray-600 truncate">{member.email}</p>
                   <a
                     href={member.linkedin}
@@ -167,7 +181,7 @@ const TeamMember = () => {
                 Add Team Member
               </h2>
 
-              {message && (
+              {/* {message && (
                 <div
                   className={`text-center my-4 ${
                     message.includes("Error")
@@ -177,61 +191,82 @@ const TeamMember = () => {
                 >
                   {message}
                 </div>
-              )}
+              )} */}
 
-              <form onSubmit={handleSubmit} className="space-y-4">
-                {/* Name Field */}
-                <div>
-                  <label
-                    htmlFor="name"
-                    className="block text-sm font-medium text-gray-700"
-                  >
-                    Name <span className="text-red-500">*</span>
-                  </label>
-                  <input
-                    type="text"
-                    id="name"
-                    value={name}
-                    onChange={(e) => setName(e.target.value)}
-                    className="mt-1 block w-full px-4 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-2 focus:ring-blue-500"
-                    required
-                  />
-                </div>
+              <form onSubmit={handleSubmit} className="space-y-6">
+                <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+                  {/* Name Field */}
+                  <div>
+                    <label
+                      htmlFor="name"
+                      className="block text-sm font-medium text-gray-700"
+                    >
+                      Name <span className="text-red-500">*</span>
+                    </label>
+                    <input
+                      type="text"
+                      id="name"
+                      value={name}
+                      onChange={(e) => setName(e.target.value)}
+                      className="mt-1 block w-full px-4 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-2 focus:ring-blue-500"
+                      required
+                    />
+                  </div>
 
-                {/* Email Field */}
-                <div>
-                  <label
-                    htmlFor="email"
-                    className="block text-sm font-medium text-gray-700"
-                  >
-                    Email <span className="text-red-500">*</span>
-                  </label>
-                  <input
-                    type="email"
-                    id="email"
-                    value={email}
-                    onChange={(e) => setEmail(e.target.value)}
-                    className="mt-1 block w-full px-4 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-2 focus:ring-blue-500"
-                    required
-                  />
-                </div>
+                  {/* Email Field */}
+                  <div>
+                    <label
+                      htmlFor="email"
+                      className="block text-sm font-medium text-gray-700"
+                    >
+                      Email <span className="text-red-500">*</span>
+                    </label>
+                    <input
+                      type="email"
+                      id="email"
+                      value={email}
+                      onChange={(e) => setEmail(e.target.value)}
+                      className="mt-1 block w-full px-4 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-2 focus:ring-blue-500"
+                      required
+                    />
+                  </div>
 
-                {/* LinkedIn Field */}
-                <div>
-                  <label
-                    htmlFor="linkedin"
-                    className="block text-sm font-medium text-gray-700"
-                  >
-                    LinkedIn Profile URL <span className="text-red-500">*</span>
-                  </label>
-                  <input
-                    type="url"
-                    id="linkedin"
-                    value={linkedin}
-                    onChange={(e) => setLinkedin(e.target.value)}
-                    className="mt-1 block w-full px-4 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-2 focus:ring-blue-500"
-                    required
-                  />
+                  {/* LinkedIn Field */}
+                  <div>
+                    <label
+                      htmlFor="linkedin"
+                      className="block text-sm font-medium text-gray-700"
+                    >
+                      LinkedIn Profile URL{" "}
+                      <span className="text-red-500">*</span>
+                    </label>
+                    <input
+                      type="url"
+                      id="linkedin"
+                      value={linkedin}
+                      onChange={(e) => setLinkedin(e.target.value)}
+                      className="mt-1 block w-full px-4 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-2 focus:ring-blue-500"
+                      required
+                    />
+                  </div>
+
+                  {/* Designation Field */}
+                  <div>
+                    <label
+                      htmlFor="designation"
+                      className="block text-sm font-medium text-gray-700"
+                    >
+                      Designation <span className="text-red-500">*</span>
+                    </label>
+                    <input
+                      type="text"
+                      id="designation"
+                      value={designation}
+                      onChange={(e) => setDesignation(e.target.value)}
+                      className="mt-1 block w-full px-4 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-2 focus:ring-blue-500"
+                      required
+                    />
+                  </div>
                 </div>
 
                 {/* About Field */}

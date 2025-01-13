@@ -154,14 +154,21 @@ const UniversityList = () => {
     <div className="p-6">
       <div className="mb-6 flex items-center justify-between">
         <h1 className="text-3xl font-bold">University List</h1>
-        <button
-          onClick={() => setAddModal(true)}
-          className="bg-gray-800 text-white px-4 py-2 rounded hover:bg-gray-600"
-        >
-          Add University
-        </button>
+        <div className="text-white px-4 py-2 rounded ">
+          <button
+            onClick={() => setAddModal(true)}
+            className="bg-gray-800 ml-4 mr-6 text-white px-4 py-2 rounded hover:bg-gray-600"
+          >
+            Add University
+          </button>
+          <button
+            onClick={() => navigate("/admin/university-details")}
+            className="bg-gray-800 text-white px-4 py-2 rounded hover:bg-gray-600"
+          >
+            Add University Details
+          </button>
+        </div>
       </div>
-
       <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
         {universities.map((university) => (
           <div
@@ -192,7 +199,11 @@ const UniversityList = () => {
               </button>
               <button
                 onClick={() =>
-                  navigate(`/admin/list-Programs/${university._id}`)
+                  navigate(
+                    `/admin/list-Programs/${
+                      university._id
+                    }/${encodeURIComponent(university.name)}`
+                  )
                 }
                 className="bg-blue-500 text-white px-4 py-2 rounded hover:bg-blue-600"
               >

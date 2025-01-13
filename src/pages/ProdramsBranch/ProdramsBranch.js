@@ -94,7 +94,7 @@ const ProgramDetails = () => {
   };
 
   const openBranchDetails = (branchId) => {
-    window.location.href = `/branch/${branchId}`;
+    window.location.href = `/admin/branch/${branchId}`;
   };
 
   // Display loading or error state

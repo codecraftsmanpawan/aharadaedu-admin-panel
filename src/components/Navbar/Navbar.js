@@ -1,14 +1,18 @@
 import React, { useState } from "react";
-import { FaBell, FaUserCircle, FaSignOutAlt, FaKey } from "react-icons/fa"; // Added icons for sign-out and key
+import {
+  FaBell,
+  FaUserCircle,
+  FaSignOutAlt,
+  FaKey,
+  FaRegClipboard,
+  FaClipboardList,
+  FaRegComment,
+  FaUsersCog,
+} from "react-icons/fa";
+import { Link } from "react-router-dom";
 
 const Navbar = () => {
-  const [showNotifications, setShowNotifications] = useState(false);
-  const [showProfileMenu, setShowProfileMenu] = useState(false); // To toggle profile menu
-
-  // Toggle notifications dropdown
-  const toggleNotifications = () => {
-    setShowNotifications(!showNotifications);
-  };
+  const [showProfileMenu, setShowProfileMenu] = useState(false);
 
   // Toggle profile dropdown menu
   const toggleProfileMenu = () => {
@@ -17,13 +21,13 @@ const Navbar = () => {
 
   // Logout functionality
   const handleLogout = () => {
-    localStorage.removeItem("AharadaadminauthToken"); // Clear auth token
-    window.location.href = "/"; // Redirect to login page
+    localStorage.removeItem("AharadaadminauthToken");
+    window.location.href = "/";
   };
 
   // Change password functionality
   const handleChangePassword = () => {
-    alert("Change Password clicked"); 
+    alert("Change Password clicked");
   };
 
   return (
@@ -38,27 +42,43 @@ const Navbar = () => {
         />
         <h1 className="text-white text-xl font-semibold">Admin Panel</h1>
       </div>
-      {/* Right side: Profile and Notifications */}
+
+      {/* Center: Navigation Links with Icons */}
+      <div className="flex items-center space-x-4">
+        <Link
+          to="/admin/admission-leads"
+          className="flex items-center space-x-2 hover:text-gray-300 text-base font-medium transition-colors"
+        >
+          <FaRegClipboard size={20} />
+          <span>Admission Leads</span>
+        </Link>
+        <Link
+          to="/admin/enquiries"
+          className="flex items-center space-x-2 hover:text-gray-300 text-base font-medium transition-colors"
+        >
+          <FaClipboardList size={20} />
+          <span>Enquiries</span>
+        </Link>
+        <Link
+          to="/admin/complaints"
+          className="flex items-center space-x-2 hover:text-gray-300 text-base font-medium transition-colors"
+        >
+          <FaRegComment size={20} />
+          <span>Complaints</span>
+        </Link>
+        <Link
+          to="/admin/applied-instructors"
+          className="flex items-center space-x-2 hover:text-gray-300 text-base font-medium transition-colors"
+        >
+          <FaUsersCog size={20} />
+          <span>Applied Instructors</span>
+        </Link>
+      </div>
+
+      {/* Right side: Profile */}
       <div className="flex items-center space-x-4">
         {/* Welcome Message */}
         <span className="text-sm">Welcome, Admin</span>
-
-        {/* Notifications Icon */}
-        <div className="relative">
-          <button onClick={toggleNotifications} className="text-white">
-            <FaBell size={24} />
-            {/* Notification indicator */}
-            {showNotifications && (
-              <div className="absolute right-0 w-48 mt-2 bg-white text-black p-2 shadow-md rounded-md">
-                <ul>
-                  <li>New comment on your post</li>
-                  <li>User registered</li>
-                  <li>New message received</li>
-                </ul>
-              </div>
-            )}
-          </button>
-        </div>
 
         {/* Profile Icon */}
         <div className="relative">
@@ -70,13 +90,13 @@ const Navbar = () => {
           {showProfileMenu && (
             <div className="absolute right-0 mt-2 w-48 bg-white text-black p-2 shadow-md rounded-md">
               <ul>
-                {/* <li
+                <li
                   className="flex items-center space-x-2 p-2 hover:bg-gray-200 cursor-pointer"
                   onClick={handleChangePassword}
                 >
                   <FaKey />
                   <span>Change Password</span>
-                </li> */}
+                </li>
                 <li
                   className="flex items-center space-x-2 p-2 hover:bg-gray-200 cursor-pointer"
                   onClick={handleLogout}
